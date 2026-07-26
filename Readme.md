@@ -1,40 +1,46 @@
-[![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](https://expressjs.com/)
+<div align="center">
 
-**Fast, unopinionated, minimalist web framework for [Node.js](https://nodejs.org).**
+# 🦊 Lynx
 
-**This project has a [Code of Conduct].**
+**Fast, lightweight, and Lynx-compatible web framework for Node.js.**
 
-## Table of contents
+[![npm](https://img.shields.io/npm/v/@xof/lynx?color=cb3837&logo=npm)](https://www.npmjs.com/package/@xof/lynx)
+[![Downloads](https://img.shields.io/npm/dm/@xof/lynx?logo=npm)](https://www.npmjs.com/package/@xof/lynx)
+[![License](https://img.shields.io/github/license/Xyraakyzzz/Lynx)](https://github.com/Xyraakyzzz/Lynx)
+[![GitHub](https://img.shields.io/badge/GitHub-Xyraakyzzz-black?logo=github)](https://github.com/Xyraakyzzz/Lynx)
 
-- [Table of contents](#table-of-contents)
-- [Installation](#installation)
-- [Features](#features)
-- [Docs \& Community](#docs--community)
-- [Quick Start](#quick-start)
-- [Philosophy](#philosophy)
-- [Examples](#examples)
-- [Contributing](#contributing)
-  - [Security Issues](#security-issues)
-  - [Running Tests](#running-tests)
-- [Current project team members](#current-project-team-members)
-  - [TC (Technical Committee)](#tc-technical-committee)
-    - [TC emeriti members](#tc-emeriti-members)
-  - [Triagers](#triagers)
-    - [Emeritus Triagers](#emeritus-triagers)
-- [License](#license)
+Simple. Familiar. Powerful.
 
+</div>
 
-[![NPM Version][npm-version-image]][npm-url]
-[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
-[![Linux Build][github-actions-ci-image]][github-actions-ci-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
-[![OpenSSF Scorecard Badge][ossf-scorecard-badge]][ossf-scorecard-visualizer]
+---
 
+# Installation
+
+```bash
+npm install @xof/lynx
+```
+
+or
+
+```bash
+yarn add @xof/lynx
+```
+
+or
+
+```bash
+pnpm add @xof/lynx
+```
+
+---
+
+# Quick Start
 
 ```js
-import express from 'express'
+import lynx from '@xof/lynx'
 
-const app = express()
+const app = lynx()
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -45,232 +51,597 @@ app.listen(3000, () => {
 })
 ```
 
-## Installation
-
-This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/).
-
-Before installing, [download and install Node.js](https://nodejs.org/en/download/).
-Node.js 18 or higher is required.
-
-If this is a brand new project, make sure to create a `package.json` first with
-the [`npm init` command](https://docs.npmjs.com/creating-a-package-json-file).
-
-Installation is done using the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
+Run:
 
 ```bash
-npm install express
+node index.js
 ```
 
-Follow [our installing guide](https://expressjs.com/en/starter/installing.html)
-for more information.
+Open:
 
-## Features
+```
+http://localhost:3000
+```
 
-  * Robust routing
-  * Focus on high performance
-  * Super-high test coverage
-  * HTTP helpers (redirection, caching, etc)
-  * View system supporting 14+ template engines
-  * Content negotiation
-  * Executable for generating applications quickly
+---
 
-## Docs & Community
+# Features
 
-  * [Website and Documentation](https://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
-  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
-  * [Github Discussions](https://github.com/expressjs/discussions) for discussion on the development and usage of Express
+- ⚡ Extremely fast
+- 📦 Lightweight
+- 🚀 Custom fetch
+- 🔧 Middleware support
+- 📁 Static files
+- 🍪 Cookies
+- 📄 JSON & Text responses
+- 🌐 Router support
+- ❤️ Easy to learn
 
-**PROTIP** Be sure to read the [migration guide to v5](https://expressjs.com/en/guide/migrating-5)
+---
 
-## Quick Start
+# Basic Usage
 
-  The quickest way to get started with express is to utilize the executable [`express(1)`](https://github.com/expressjs/generator) to generate an application as shown below:
+## GET
 
-  Install the executable. The executable's major version will match Express's:
+```js
+app.get('/', (req, res) => {
+  res.send('Hello World')
+})
+```
+
+---
+
+## POST
+
+```js
+app.post('/login', (req, res) => {
+  res.json({
+    success: true
+  })
+})
+```
+
+---
+
+## Route Parameters
+
+```js
+app.get('/users/:id', (req, res) => {
+  res.send(req.params.id)
+})
+```
+
+---
+
+## Query
+
+```
+/search?q=lynx
+```
+
+```js
+app.get('/search', (req, res) => {
+  res.json(req.query)
+})
+```
+
+---
+
+## JSON Response
+
+```js
+app.get('/api', (req, res) => {
+  res.json({
+    success: true,
+    creator: 'Xyraakyzzz'
+  })
+})
+```
+
+---
+
+## Send File
+
+```js
+app.get('/download', (req, res) => {
+  res.sendFile('./example.txt')
+})
+```
+
+---
+
+## Static Files
+
+```js
+app.use('/public', lynx.static('public'))
+```
+
+```
+public/
+ ├── style.css
+ ├── app.js
+ └── logo.png
+```
+
+Access:
+
+```
+/public/style.css
+```
+
+---
+
+## Middleware
+
+```js
+app.use((req, res, next) => {
+  console.log(req.method, req.url)
+  next()
+})
+```
+
+---
+
+## Listen
+
+```js
+app.listen(3000)
+```
+
+or
+
+```js
+app.listen(3000, () => {
+  console.log('Ready!')
+})
+```
+
+---
+
+# Compatibility
+
+```js
+app.get(...)
+app.post(...)
+app.put(...)
+app.patch(...)
+app.delete(...)
+
+app.use(...)
+app.listen(...)
+```
+
+---
+
+# Example Project
+
+```js
+import lynx from '@xof/lynx'
+
+const app = lynx()
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`)
+  next()
+})
+
+app.get('/', (req, res) => {
+  res.send('Welcome to Lynx!')
+})
+
+app.get('/json', (req, res) => {
+  res.json({
+    framework: 'Lynx',
+    version: '1.0.0'
+  })
+})
+
+app.listen(3000)
+```
+
+---
+
+# Documentation
+
+Coming soon.
+
+---
+
+# Repository
+
+GitHub
+
+https://github.com/Xyraakyzzz/Lynx
+
+NPM
+
+https://www.npmjs.com/package/@xof/lynx
+
+---
+
+# 🇮🇩 Tutorial (Bahasa Indonesia)
+
+## Instalasi
 
 ```bash
-npm install -g express-generator@4
+npm install @xof/lynx
 ```
 
-  Create the app:
+---
+
+## Membuat Server
+
+```js
+import lynx from '@xof/lynx'
+
+const app = lynx()
+
+app.get('/', (req, res) => {
+  res.send('Halo Dunia!')
+})
+
+app.listen(3000)
+```
+
+Jalankan:
 
 ```bash
-express /tmp/foo && cd /tmp/foo
+node index.js
 ```
 
-  Install dependencies:
+Lalu buka:
+
+```
+http://localhost:3000
+```
+
+---
+
+## Routing
+
+```js
+app.get('/about', (req, res) => {
+  res.send('Tentang')
+})
+
+app.post('/login', (req, res) => {
+  res.json({
+    success: true
+  })
+})
+```
+
+---
+
+## Parameter URL
+
+```js
+app.get('/users/:id', (req, res) => {
+  res.send(req.params.id)
+})
+```
+
+---
+
+## Query
+
+```
+/search?q=node
+```
+
+```js
+req.query.q
+```
+
+---
+
+## Middleware
+
+```js
+app.use((req, res, next) => {
+  console.log(req.url)
+  next()
+})
+```
+
+---
+
+## Mengirim JSON
+
+```js
+res.json({
+  success: true
+})
+```
+
+---
+
+## Menjalankan Server
+
+```js
+app.listen(3000)
+```
+
+---
+
+# 🇺🇸 Tutorial (English)
+
+## Install
 
 ```bash
-npm install
+npm install @xof/lynx
 ```
 
-  Start the server:
+---
+
+## Create a Server
+
+```js
+import lynx from '@xof/lynx'
+
+const app = lynx()
+
+app.get('/', (req, res) => {
+  res.send('Hello World')
+})
+
+app.listen(3000)
+```
+
+Run:
 
 ```bash
-npm start
+node index.js
 ```
 
-  View the website at: http://localhost:3000
+Visit:
 
-## Philosophy
-
-  The Express philosophy is to provide small, robust tooling for HTTP servers, making
-  it a great solution for single page applications, websites, hybrids, or public
-  HTTP APIs.
-
-  Express does not force you to use any specific ORM or template engine. With support for over
-  14 template engines via [@ladjs/consolidate](https://github.com/ladjs/consolidate),
-  you can quickly craft your perfect framework.
-
-## Examples
-
-  To view the examples, clone the Express repository:
-
-```bash
-git clone https://github.com/expressjs/express.git --depth 1 && cd express
+```
+http://localhost:3000
 ```
 
-  Then install the dependencies:
+---
 
-```bash
-npm install
+## Routing
+
+```js
+app.get('/about', (req, res) => {
+  res.send('About')
+})
+
+app.post('/login', (req, res) => {
+  res.json({
+    success: true
+  })
+})
 ```
 
-  Then run whichever example you want:
+---
 
-```bash
-node examples/content-negotiation
+## URL Parameters
+
+```js
+app.get('/users/:id', (req, res) => {
+  res.send(req.params.id)
+})
 ```
 
-## Contributing
+---
 
-The Express.js project welcomes all constructive contributions. Contributions take many forms,
-from code for bug fixes and enhancements, to additions and fixes to documentation, additional
-tests, triaging incoming pull requests and issues, and more!
+## Query
 
-See the [Contributing Guide] for more technical details on contributing.
-
-### Security Issues
-
-If you discover a security vulnerability in Express, please see [Security Policies and Procedures](SECURITY.md).
-
-### Running Tests
-
-To run the test suite, first install the dependencies:
-
-```bash
-npm install
+```
+/search?q=node
 ```
 
-Then run `npm test`:
-
-```bash
-npm test
+```js
+req.query.q
 ```
 
-## Current project team members
+---
 
-For information about the governance of the express.js project, see [GOVERNANCE.md](https://github.com/expressjs/discussions/blob/HEAD/docs/GOVERNANCE.md).
+## Middleware
 
-The original author of Express is [TJ Holowaychuk](https://github.com/tj)
+```js
+app.use((req, res, next) => {
+  console.log(req.url)
+  next()
+})
+```
 
-[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
+---
 
-### TC (Technical Committee)
+## JSON Response
 
-* [UlisesGascon](https://github.com/UlisesGascon) - **Ulises Gascón** (he/him)
-* [jonchurch](https://github.com/jonchurch) - **Jon Church**
-* [wesleytodd](https://github.com/wesleytodd) - **Wes Todd**
-* [LinusU](https://github.com/LinusU) - **Linus Unnebäck**
-* [blakeembrey](https://github.com/blakeembrey) - **Blake Embrey**
-* [sheplu](https://github.com/sheplu) - **Jean Burellier**
-* [crandmck](https://github.com/crandmck) - **Rand McKinney**
-* [ctcpip](https://github.com/ctcpip) - **Chris de Almeida**
+```js
+res.json({
+  success: true
+})
+```
 
-<details>
-<summary>TC emeriti members</summary>
+---
 
-#### TC emeriti members
+## Start Server
 
-  * [dougwilson](https://github.com/dougwilson) - **Douglas Wilson**
-  * [hacksparrow](https://github.com/hacksparrow) - **Hage Yaapa**
-  * [jonathanong](https://github.com/jonathanong) - **jongleberry**
-  * [niftylettuce](https://github.com/niftylettuce) - **niftylettuce**
-  * [troygoode](https://github.com/troygoode) - **Troy Goode**
-</details>
+```js
+app.listen(3000)
+```
 
+---
 
-### Triagers
+# HTTP Client (Fetch)
 
-* [aravindvnair99](https://github.com/aravindvnair99) - **Aravind Nair**
-* [bjohansebas](https://github.com/bjohansebas) - **Sebastian Beltran**
-* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
-* [CBID2](https://github.com/CBID2) - **Christine Belzie**
-* [UlisesGascon](https://github.com/UlisesGascon) - **Ulises Gascón** (he/him)
-* [IamLizu](https://github.com/IamLizu) - **S M Mahmudul Hasan** (he/him)
-* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
-* [efekrskl](https://github.com/efekrskl) - **Efe Karasakal**
+Lynx includes a built-in HTTP client based on the native `fetch()` API.
 
+## Import
 
-<details>
-<summary>Triagers emeriti members</summary>
+### CommonJS
 
-#### Emeritus Triagers
+```js
+const lynx = require('@xof/lynx')
 
-  * [AuggieH](https://github.com/AuggieH) - **Auggie Hudak**
-  * [G-Rath](https://github.com/G-Rath) - **Gareth Jones**
-  * [MohammadXroid](https://github.com/MohammadXroid) - **Mohammad Ayashi**
-  * [NawafSwe](https://github.com/NawafSwe) - **Nawaf Alsharqi**
-  * [NotMoni](https://github.com/NotMoni) - **Moni**
-  * [VigneshMurugan](https://github.com/VigneshMurugan) - **Vignesh Murugan**
-  * [davidmashe](https://github.com/davidmashe) - **David Ashe**
-  * [digitaIfabric](https://github.com/digitaIfabric) - **David**
-  * [e-l-i-s-e](https://github.com/e-l-i-s-e) - **Elise Bonner**
-  * [fed135](https://github.com/fed135) - **Frederic Charette**
-  * [firmanJS](https://github.com/firmanJS) - **Firman Abdul Hakim**
-  * [getspooky](https://github.com/getspooky) - **Yasser Ameur**
-  * [ghinks](https://github.com/ghinks) - **Glenn**
-  * [ghousemohamed](https://github.com/ghousemohamed) - **Ghouse Mohamed**
-  * [gireeshpunathil](https://github.com/gireeshpunathil) - **Gireesh Punathil**
-  * [jake32321](https://github.com/jake32321) - **Jake Reed**
-  * [jonchurch](https://github.com/jonchurch) - **Jon Church**
-  * [lekanikotun](https://github.com/lekanikotun) - **Troy Goode**
-  * [marsonya](https://github.com/marsonya) - **Lekan Ikotun**
-  * [mastermatt](https://github.com/mastermatt) - **Matt R. Wilson**
-  * [maxakuru](https://github.com/maxakuru) - **Max Edell**
-  * [mlrawlings](https://github.com/mlrawlings) - **Michael Rawlings**
-  * [rodion-arr](https://github.com/rodion-arr) - **Rodion Abdurakhimov**
-  * [sheplu](https://github.com/sheplu) - **Jean Burellier**
-  * [tarunyadav1](https://github.com/tarunyadav1) - **Tarun yadav**
-  * [tunniclm](https://github.com/tunniclm) - **Mike Tunnicliffe**
-  * [enyoghasim](https://github.com/enyoghasim) - **David Enyoghasim**
-  * [0ss](https://github.com/0ss) - **Salah**
-  * [import-brain](https://github.com/import-brain) - **Eric Cheng** (he/him)
-  * [dakshkhetan](https://github.com/dakshkhetan) - **Daksh Khetan** (he/him)
-  * [lucasraziel](https://github.com/lucasraziel) - **Lucas Soares Do Rego**
-  * [mertcanaltin](https://github.com/mertcanaltin) - **Mert Can Altin**
-  * [dpopp07](https://github.com/dpopp07) - **Dustin Popp**
-  * [Sushmeet](https://github.com/Sushmeet) - **Sushmeet Sunger**
-  * [3imed-jaberi](https://github.com/3imed-jaberi) - **Imed Jaberi**
+const res = await lynx.fetch.get('https://jsonplaceholder.typicode.com/posts/1')
 
-</details>
+console.log(res.data)
+```
 
+### ES Module
+
+```js
+import lynx from '@xof/lynx'
+
+const res = await lynx.fetch.get('https://jsonplaceholder.typicode.com/posts/1')
+
+console.log(res.data)
+```
+
+---
+
+## GET
+
+```js
+const res = await lynx.fetch.get('https://api.example.com/users')
+
+console.log(res.data)
+```
+
+---
+
+## POST
+
+```js
+const res = await lynx.fetch.post(
+  'https://api.example.com/users',
+  {
+    name: 'John',
+    age: 20
+  }
+)
+
+console.log(res.data)
+```
+
+---
+
+## PUT
+
+```js
+await lynx.fetch.put(
+  'https://api.example.com/users/1',
+  {
+    name: 'John'
+  }
+)
+```
+
+---
+
+## PATCH
+
+```js
+await lynx.fetch.patch(
+  'https://api.example.com/users/1',
+  {
+    age: 21
+  }
+)
+```
+
+---
+
+## DELETE
+
+```js
+await lynx.fetch.delete('https://api.example.com/users/1')
+```
+
+---
+
+## HEAD
+
+```js
+await lynx.fetch.head('https://api.example.com')
+```
+
+---
+
+## OPTIONS
+
+```js
+await lynx.fetch.options('https://api.example.com')
+```
+
+---
+
+## Custom Headers
+
+```js
+const res = await lynx.fetch.get(
+  'https://api.example.com',
+  {
+    headers: {
+      Authorization: 'Bearer YOUR_TOKEN'
+    }
+  }
+)
+```
+
+---
+
+## Base URL
+
+```js
+const api = lynx.fetch.create({
+  baseURL: 'https://api.example.com'
+})
+
+const users = await api.get('/users')
+const posts = await api.get('/posts')
+```
+
+---
+
+## Response
+
+Every request returns:
+
+```js
+{
+  data,
+  status,
+  statusText,
+  ok,
+  redirected,
+  url,
+  method,
+  headers,
+  response
+}
+```
+
+Example:
+
+```js
+const res = await lynx.fetch.get('https://api.example.com')
+
+console.log(res.status)
+console.log(res.ok)
+console.log(res.headers)
+console.log(res.data)
+```
+
+---
 
 ## License
 
-  [MIT](LICENSE)
+This project is licensed under the **[MIT License](LICENSE)**.
 
-[coveralls-image]: https://img.shields.io/coverallsCoverage/github/expressjs/express?branch=master
-[coveralls-url]: https://coveralls.io/r/expressjs/express?branch=master
-[github-actions-ci-image]: https://img.shields.io/github/actions/workflow/status/expressjs/express/ci.yml?branch=master&label=ci
-[github-actions-ci-url]: https://github.com/expressjs/express/actions/workflows/ci.yml
-[npm-downloads-image]: https://img.shields.io/npm/dm/express
-[npm-downloads-url]: https://npmcharts.com/compare/express?minimal=true
-[npm-url]: https://npmjs.org/package/express
-[npm-version-image]: https://img.shields.io/npm/v/express
-[ossf-scorecard-badge]: https://api.scorecard.dev/projects/github.com/expressjs/express/badge
-[ossf-scorecard-visualizer]: https://ossf.github.io/scorecard-visualizer/#/projects/github.com/expressjs/express
-[Code of Conduct]: https://github.com/expressjs/.github/blob/HEAD/CODE_OF_CONDUCT.md
-[Contributing Guide]: https://github.com/expressjs/.github/blob/HEAD/CONTRIBUTING.md
+---
+
+<div align="center">
+
+Made with ❤️ by **[Xyraakyzzz](https://github.com/Xyraakyzzz)**
+
+⭐ If you like **Lynx**, don't forget to give this repository a star.
+
+</div>
